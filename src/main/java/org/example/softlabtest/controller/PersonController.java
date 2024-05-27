@@ -1,9 +1,9 @@
 package org.example.softlabtest.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.example.softlabtest.dto.PersonDTO;
 import org.example.softlabtest.entity.Person;
 import org.example.softlabtest.service.api.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,20 +16,11 @@ import java.util.UUID;
  * Контроллер для управления данными о людях.
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/persons")
 public class PersonController {
 
     private final PersonService personService;
-
-    /**
-     * Конструктор с автозаполнением зависимостей.
-     *
-     * @param personService Сервис для управления данными о людях.
-     */
-    @Autowired
-    public PersonController(PersonService personService) {
-        this.personService = personService;
-    }
 
     /**
      * Получает данные о человеке по его идентификатору.

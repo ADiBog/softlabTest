@@ -1,7 +1,7 @@
 package org.example.softlabtest.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.example.softlabtest.service.api.dictionary.EducationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,20 +11,11 @@ import java.util.Set;
  * Контроллер для работы с данными об образовании.
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/educations")
 public class EducationController {
 
     private final EducationService educationService;
-
-    /**
-     * Конструктор с автоматическим внедрением зависимости EducationService.
-     *
-     * @param educationService сервис для работы с данными об образовании
-     */
-    @Autowired
-    public EducationController(EducationService educationService) {
-        this.educationService = educationService;
-    }
 
     /**
      * Получить список всех университетов.

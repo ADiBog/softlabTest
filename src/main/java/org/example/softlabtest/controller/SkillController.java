@@ -1,7 +1,7 @@
 package org.example.softlabtest.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.example.softlabtest.service.api.dictionary.SkillService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,15 +11,11 @@ import java.util.Set;
  * Контроллер для управления операциями, связанными с навыками.
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/skills")
 public class SkillController {
 
     private final SkillService skillService;
-
-    @Autowired
-    public SkillController(SkillService skillService) {
-        this.skillService = skillService;
-    }
 
     /**
      * Получает список всех навыков.
