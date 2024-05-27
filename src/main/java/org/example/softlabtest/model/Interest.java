@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 
 @Entity
 public class Interest {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     private Person person;
 
@@ -22,6 +22,14 @@ public class Interest {
         this.id = id;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     public String getName() {
         return name;
     }
@@ -29,13 +37,4 @@ public class Interest {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Person getUser() {
-        return person;
-    }
-
-    public void setUser(Person person) {
-        this.person = person;
-    }
-// Getters and Setters
 }

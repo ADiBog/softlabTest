@@ -1,21 +1,10 @@
-package org.example.softlabtest.model;
+package org.example.softlabtest.dto;
 
-import jakarta.persistence.*;
-
-import java.util.List;
-
-@Entity
-public class Person {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PersonDTO {
     private Long id;
     private String name;
     private String email;
     private String bio;
-
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Interest> interests;
 
     public Long getId() {
         return id;
@@ -48,12 +37,5 @@ public class Person {
     public void setBio(String bio) {
         this.bio = bio;
     }
-
-    public List<Interest> getInterests() {
-        return interests;
-    }
-
-    public void setInterests(List<Interest> interests) {
-        this.interests = interests;
-    }
 }
+
