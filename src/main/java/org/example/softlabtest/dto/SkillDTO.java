@@ -1,12 +1,28 @@
 package org.example.softlabtest.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Value;
 
 import java.util.UUID;
 
-@Data
+/**
+ * Data Transfer Object для представления навыка.
+ */
+@Value
+@Builder
 public class SkillDTO {
-    private UUID id;
-    private String name;
-    private String description;
+    /**
+     * Уникальный идентификатор человека.
+     */
+    UUID id;
+
+    /**
+     * Название навыка.
+     */
+    String name;
+
+    /**
+     * Описание навыка.
+     */
+    String description;
 }

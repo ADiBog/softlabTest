@@ -1,16 +1,39 @@
 package org.example.softlabtest.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Value;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Data
+/**
+ * Data Transfer Object для представления опыта работы.
+ */
+@Value
+@Builder
 public class ExperienceDTO {
-    private UUID id;
-    private LocalDate fromDate; // Можно использовать LocalDate для дат
-    private LocalDate toDate;   // Можно использовать LocalDate для дат
-    private String company;
-    private String position;
-    private String description;
+    /**
+     * Уникальный идентификатор человека.
+     */
+    UUID id;
+
+    /**
+     * Дата начала работы.
+     */
+    LocalDate fromDate;
+
+    /**
+     * Дата окончания работы.
+     */
+    LocalDate toDate;
+
+    /**
+     * Название компании.
+     */
+    String company;
+
+    /**
+     * Должность в компании.
+     */
+    String position;
 }

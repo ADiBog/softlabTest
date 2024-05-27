@@ -6,8 +6,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Репозиторий для управления сущностями Person.
+ */
 public interface PersonRepository extends JpaRepository<Person, UUID> {
-    List<Person> findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(String name, String email);
 
-    List<Person> findDistinctBySkills_NameIn(List<String> skillNames);
+    /**
+     * Находит всех людей, чьи имена или электронные почты содержат заданный поисковый запрос (без учета регистра).
+     *
+     * @param name  Поисковый запрос для имени.
+     * @param email Поисковый запрос для электронной почты.
+     * @return Список людей, удовлетворяющих критериям поиска.
+     */
+    List<Person> findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(String name, String email);
 }

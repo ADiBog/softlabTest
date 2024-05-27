@@ -1,17 +1,49 @@
 package org.example.softlabtest.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Value;
 
 import java.util.List;
 import java.util.UUID;
 
-@Data
+/**
+ * Data Transfer Object для представления человека.
+ */
+@Value
+@Builder
 public class PersonDTO {
-    private UUID id;
-    private String name;
-    private String email;
-    private String bio;
-    private List<SkillDTO> skills;
-    private List<ExperienceDTO> experiences;
-    private List<EducationDTO> education;
+    /**
+     * Уникальный идентификатор человека.
+     */
+    UUID id;
+
+    /**
+     * Имя человека.
+     */
+    String name;
+
+    /**
+     * Электронная почта человека.
+     */
+    String email;
+
+    /**
+     * Биография человека.
+     */
+    String bio;
+
+    /**
+     * Список навыков человека.
+     */
+    List<SkillDTO> skills;
+
+    /**
+     * Список опыта работы человека.
+     */
+    List<ExperienceDTO> experiences;
+
+    /**
+     * Список образования человека.
+     */
+    List<EducationDTO> education;
 }
