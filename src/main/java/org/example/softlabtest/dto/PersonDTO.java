@@ -1,41 +1,17 @@
 package org.example.softlabtest.dto;
 
+import lombok.Data;
+
+import java.util.List;
+import java.util.UUID;
+
+@Data
 public class PersonDTO {
-    private Long id;
+    private UUID id;
     private String name;
     private String email;
     private String bio;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
+    private List<SkillDTO> skills;
+    private List<ExperienceDTO> experiences;
+    private List<EducationDTO> education;
 }
-

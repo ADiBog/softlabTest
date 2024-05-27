@@ -1,9 +1,6 @@
-package org.example.softlabtest.service;
+package org.example.softlabtest.service.api;
 
 import org.example.softlabtest.model.Person;
-import org.example.softlabtest.repository.PersonRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * Здесь должны быть доки номральные.

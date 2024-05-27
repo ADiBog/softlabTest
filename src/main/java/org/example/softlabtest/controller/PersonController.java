@@ -3,7 +3,7 @@ package org.example.softlabtest.controller;
 import org.example.softlabtest.dto.PersonDTO;
 import org.example.softlabtest.mapper.PersonMapper;
 import org.example.softlabtest.model.Person;
-import org.example.softlabtest.service.PersonService;
+import org.example.softlabtest.service.api.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
