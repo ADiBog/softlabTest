@@ -1,4 +1,4 @@
-package org.example.softlabtest.model;
+package org.example.softlabtest.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String name;
     private String email;

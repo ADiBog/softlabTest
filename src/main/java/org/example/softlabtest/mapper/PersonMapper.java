@@ -1,31 +1,14 @@
 package org.example.softlabtest.mapper;
 
 import org.example.softlabtest.dto.PersonDTO;
-import org.example.softlabtest.model.Person;
+import org.example.softlabtest.entity.Person;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-public class PersonMapper {
+@Mapper
+public interface PersonMapper {
+    PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
-    public static PersonDTO toDTO(Person person) {
-        if (person == null) {
-            return null;
-        }
-        PersonDTO dto = new PersonDTO();
-        dto.setId(person.getId());
-        dto.setName(person.getName());
-        dto.setEmail(person.getEmail());
-        dto.setBio(person.getBio());
-        return dto;
-    }
-
-    public static Person toEntity(PersonDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-        Person person = new Person();
-        person.setId(dto.getId());
-        person.setName(dto.getName());
-        person.setEmail(dto.getEmail());
-        person.setBio(dto.getBio());
-        return person;
-    }
+    Person toEntity(PersonDTO personDTO);
+    PersonDTO toDTO(Person person);
 }

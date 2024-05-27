@@ -1,37 +1,59 @@
 -- Создание таблицы person
 CREATE TABLE IF NOT EXISTS person (
-                                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                      name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+                                      id UUID PRIMARY KEY,
+                                      name VARCHAR(255),
+    email VARCHAR(255),
     bio TEXT
     );
 
--- Создание таблицы interest
-CREATE TABLE IF NOT EXISTS interest (
-                                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                        name VARCHAR(255) NOT NULL
+-- Создание таблицы skill
+CREATE TABLE IF NOT EXISTS skill (
+                                     id UUID PRIMARY KEY,
+                                     name VARCHAR(255),
+    description TEXT,
+    person_id UUID,
+    FOREIGN KEY (person_id) REFERENCES person(id)
     );
 
--- Создание таблицы person_interest для связи многие ко многим
-CREATE TABLE IF NOT EXISTS person_interest (
-                                               person_id BIGINT NOT NULL,
-                                               interest_id BIGINT NOT NULL,
-                                               PRIMARY KEY (person_id, interest_id),
-    FOREIGN KEY (person_id) REFERENCES person(id) ON DELETE CASCADE,
-    FOREIGN KEY (interest_id) REFERENCES interest(id) ON DELETE CASCADE
+-- Создание таблицы experience
+CREATE TABLE IF NOT EXISTS experience (
+                                          id UUID PRIMARY KEY,
+                                          from_date DATE,
+                                          to_date DATE,
+                                          company VARCHAR(255),
+    position VARCHAR(255),
+    description TEXT,
+    person_id UUID,
+    FOREIGN KEY (person_id) REFERENCES person(id)
+    );
+
+-- Создание таблицы education
+CREATE TABLE IF NOT EXISTS education (
+                                         id UUID PRIMARY KEY,
+                                         finished_at DATE,
+                                         university VARCHAR(255),
+    degree VARCHAR(255),
+    degree_name VARCHAR(255),
+    person_id UUID,
+    FOREIGN KEY (person_id) REFERENCES person(id)
     );
 
 -- Вставка данных в таблицу person
-INSERT INTO person (name, email, bio) VALUES ('John Doe', 'john.doe@example.com', 'Software Developer');
-INSERT INTO person (name, email, bio) VALUES ('Jane Smith', 'jane.smith@example.com', 'Data Scientist');
+INSERT INTO person (id, name, email, bio) VALUES
+                                              (UUID(), 'John Doe', 'john.doe@example.com', 'Software Engineer'),
+                                              (UUID(), 'Jane Smith', 'jane.smith@example.com', 'Data Scientist');
 
--- Вставка данных в таблицу interest
-INSERT INTO interest (name) VALUES ('Reading');
-INSERT INTO interest (name) VALUES ('Traveling');
-INSERT INTO interest (name) VALUES ('Cooking');
+-- Вставка данных в таблицу skill
+INSERT INTO skill (id, name, description, person_id) VALUES
+                                                         (UUID(), 'Java', 'Experienced in Java programming', (SELECT id FROM person WHERE email='john.doe@example.com')),
+                                                         (UUID(), 'Python', 'Experienced in Python programming', (SELECT id FROM person WHERE email='jane.smith@example.com'));
 
--- Вставка данных в таблицу person_interest для связывания людей с их интересами
-INSERT INTO person_interest (person_id, interest_id) VALUES (1, 1); -- John Doe likes Reading
-INSERT INTO person_interest (person_id, interest_id) VALUES (1, 2); -- John Doe likes Traveling
-INSERT INTO person_interest (person_id, interest_id) VALUES (2, 2); -- Jane Smith likes Traveling
-INSERT INTO person_interest (person_id, interest_id) VALUES (2, 3); -- Jane Smith likes Cooking
+-- Вставка данных в таблицу experience
+INSERT INTO experience (id, from_date, to_date, company, position, description, person_id) VALUES
+                                                                                               (UUID(), '2020-01-01', '2021-01-01', 'Tech Corp', 'Developer', 'Developed software solutions', (SELECT id FROM person WHERE email='john.doe@example.com')),
+                                                                                               (UUID(), '2019-01-01', '2020-01-01', 'Data Inc.', 'Data Analyst', 'Analyzed data sets', (SELECT id FROM person WHERE email='jane.smith@example.com'));
+
+-- Вставка данных в таблицу education
+INSERT INTO education (id, finished_at, university, degree, degree_name, person_id) VALUES
+                                                                                        (UUID(), '2018-06-01', 'MIT', 'BSc', 'Computer Science', (SELECT id FROM person WHERE email='john.doe@example.com')),
+                                                                                        (UUID(), '2017-06-01', 'Stanford', 'MSc', 'Data Science', (SELECT id FROM person WHERE email='jane.smith@example.com'));
