@@ -10,6 +10,7 @@ import org.example.softlabtest.service.api.PersonService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -31,19 +32,8 @@ public class PersonServiceImpl implements PersonService {
      * @throws NotFoundException если человек с указанным идентификатором не найден.
      */
     @Override
-    public Person findById(UUID id) {
-        return personRepository.findById(id).orElseThrow(() -> new NotFoundException("Не найдено"));
-    }
-
-    /**
-     * Сохраняет данные о человеке.
-     *
-     * @param person Объект человека для сохранения.
-     * @return Сохраненный объект человека.
-     */
-    @Override
-    public Person save(Person person) {
-        return personRepository.save(person);
+    public PersonDTO findById(UUID id) {
+        return personRepository.findById(id).map(personMapper::toDTO).orElseThrow(() -> new NotFoundException("Не найдено"));
     }
 
     /**
@@ -57,39 +47,18 @@ public class PersonServiceImpl implements PersonService {
     }
 
     /**
-     * Возвращает список всех людей.
-     *
-     * @return Список всех людей.
-     */
-    @Override
-    public List<Person> findAll() {
-        return personRepository.findAll();
-    }
-
-    /**
-     * Ищет людей по строке поиска (имя или email).
-     *
-     * @param searchString Строка поиска.
-     * @return Список людей, соответствующих строке поиска.
-     */
-    @Override
-    public List<Person> searchByString(String searchString) {
-        return personRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(searchString, searchString);
-    }
-
-    /**
      * Обновляет данные о человеке на основе переданного DTO.
      *
      * @param personDTO DTO с данными для обновления.
      * @return Обновленный объект человека.
      */
     @Override
-    public Person updatePerson(PersonDTO personDTO) {
-        Person existingPerson = findById(personDTO.getId());
+    public PersonDTO updatePerson(PersonDTO personDTO) {
+        Person existingPerson = personRepository.findById(personDTO.getId()).orElse(null);
         if (existingPerson == null) {
-            return null;
+            return personDTO;
         }
-        return save(personMapper.toEntity(personDTO));
+        return Optional.of(personDTO).map(personMapper::toEntity).map(personRepository::save).map(personMapper::toDTO).orElse(null);
     }
 
     /**
@@ -99,9 +68,9 @@ public class PersonServiceImpl implements PersonService {
      * @return Созданный объект человека.
      */
     @Override
-    public Person createPerson(PersonDTO personDTO) {
+    public PersonDTO createPerson(PersonDTO personDTO) {
         Person person = personMapper.toEntity(personDTO);
-        return save(person);
+        return personMapper.toDTO(personRepository.save(person));
     }
 
     /**
@@ -111,21 +80,21 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     public List<PersonDTO> getAllPersons() {
-        List<Person> persons = findAll();
+        List<Person> persons = personRepository.findAll();
         return persons.stream()
                 .map(personMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     /**
-     * Ищет людей по строке поиска и возвращает их в виде DTO.
+     * Ищет людей по строке поиска (имя или email).
      *
      * @param searchString Строка поиска.
      * @return Список людей в виде DTO, соответствующих строке поиска.
      */
     @Override
     public List<PersonDTO> searchPersons(String searchString) {
-        List<Person> persons = searchByString(searchString);
+        List<Person> persons = personRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(searchString, searchString);
         return persons.stream()
                 .map(personMapper::toDTO)
                 .collect(Collectors.toList());

@@ -32,9 +32,8 @@ public class EducationController {
      * @return список университетов
      */
     @GetMapping("/universities")
-    public ResponseEntity<Set<String>> getUniversities() {
-        Set<String> universities = educationService.getUniversities();
-        return ResponseEntity.ok(universities);
+    public Set<String> getUniversities() {
+        return educationService.getUniversities();
     }
 
     /**
