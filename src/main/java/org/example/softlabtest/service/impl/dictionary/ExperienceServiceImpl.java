@@ -24,9 +24,7 @@ public class ExperienceServiceImpl implements ExperienceService {
      */
     @Override
     public Set<String> getCompanies() {
-        return experienceRepository.findAll().stream()
-                .map(Experience::getCompany)
-                .collect(Collectors.toSet());
+        return experienceRepository.findAll().stream().map(Experience::getCompany).collect(Collectors.toSet());
     }
 
     /**

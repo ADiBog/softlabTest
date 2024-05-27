@@ -24,9 +24,7 @@ public class SkillServiceImpl implements SkillService {
      */
     @Override
     public Set<String> getSkills() {
-        return skillRepository.findAll().stream()
-                .map(Skill::getName)
-                .collect(Collectors.toSet());
+        return skillRepository.findAll().stream().map(Skill::getName).collect(Collectors.toSet());
     }
 
     /**

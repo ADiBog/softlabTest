@@ -99,7 +99,7 @@ public class PersonController {
     /**
      * Ищет людей по строке поиска и возвращает их в виде DTO.
      *
-     * @param name имя для поиска.
+     * @param name  имя для поиска.
      * @param email email для поиска.
      * @return Ответ со списком людей, соответствующих строке поиска.
      */
@@ -119,11 +119,7 @@ public class PersonController {
      * @return страница с DTO объектов {@link PersonDTO}.
      */
     @GetMapping("/searchPage")
-    public Page<PersonDTO> searchPersons(
-            @RequestParam int page,
-            @RequestParam int size,
-            @RequestParam String sortField,
-            @RequestParam String sortDirection) {
+    public Page<PersonDTO> searchPersons(@RequestParam int page, @RequestParam int size, @RequestParam String sortField, @RequestParam String sortDirection) {
         return personService.searchPersons(page, size, sortField, sortDirection);
     }
 

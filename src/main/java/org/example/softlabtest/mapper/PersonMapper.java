@@ -4,8 +4,6 @@ import org.example.softlabtest.dto.PersonDTO;
 import org.example.softlabtest.entity.Person;
 import org.mapstruct.Mapper;
 
-import java.util.List;
-
 /**
  * Интерфейс маппера для преобразования между сущностью Person и DTO PersonDTO.
  */
@@ -27,6 +25,4 @@ public interface PersonMapper {
      * @return Преобразованный объект PersonDTO.
      */
     PersonDTO toDTO(Person person);
-
-    List<PersonDTO> toListDTO(List<Person> persons);
 }

@@ -53,7 +53,7 @@ public interface PersonService {
     /**
      * Поиск пользователей по строке и возврат их в виде DTO.
      *
-     * @param name имя для поиска.
+     * @param name  имя для поиска.
      * @param email email для поиска.
      * @return Список найденных пользователей в виде DTO.
      */

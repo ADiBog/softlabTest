@@ -85,24 +85,20 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<PersonDTO> getAllPersons() {
         List<Person> persons = personRepository.findAll();
-        return persons.stream()
-                .map(personMapper::toDTO)
-                .collect(Collectors.toList());
+        return persons.stream().map(personMapper::toDTO).collect(Collectors.toList());
     }
 
     /**
      * Ищет людей по строке поиска (имя или email).
      *
-     * @param name имя для поиска.
+     * @param name  имя для поиска.
      * @param email email для поиска.
      * @return Список людей в виде DTO, соответствующих строке поиска.
      */
     @Override
     public List<PersonDTO> searchPersons(String name, String email) {
         List<Person> persons = personRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(name, email);
-        return persons.stream()
-                .map(personMapper::toDTO)
-                .collect(Collectors.toList());
+        return persons.stream().map(personMapper::toDTO).collect(Collectors.toList());
     }
 
     /**

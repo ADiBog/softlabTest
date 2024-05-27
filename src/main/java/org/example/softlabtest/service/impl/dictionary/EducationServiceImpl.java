@@ -24,9 +24,7 @@ public class EducationServiceImpl implements EducationService {
      */
     @Override
     public Set<String> getUniversities() {
-        return educationRepository.findAll().stream()
-                .map(Education::getUniversity)
-                .collect(Collectors.toSet());
+        return educationRepository.findAll().stream().map(Education::getUniversity).collect(Collectors.toSet());
     }
 
     /**
