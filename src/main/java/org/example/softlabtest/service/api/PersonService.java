@@ -1,6 +1,8 @@
 package org.example.softlabtest.service.api;
 
 import org.example.softlabtest.dto.PersonDTO;
+import org.example.softlabtest.entity.Person;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.UUID;
@@ -51,8 +53,21 @@ public interface PersonService {
     /**
      * Поиск пользователей по строке и возврат их в виде DTO.
      *
-     * @param searchString Строка для поиска (по имени или email).
+     * @param name имя для поиска.
+     * @param email email для поиска.
      * @return Список найденных пользователей в виде DTO.
      */
-    List<PersonDTO> searchPersons(String searchString);
+    List<PersonDTO> searchPersons(String name, String email);
+
+    /**
+     * Выполняет поиск и пагинацию сущностей {@link Person} с возможностью сортировки.
+     *
+     * @param page          номер страницы (начиная с 0).
+     * @param size          количество элементов на странице.
+     * @param sortField     поле, по которому будет осуществляться сортировка.
+     * @param sortDirection направление сортировки (ASC или DESC).
+     * @return страница с DTO объектов {@link PersonDTO}.
+     * @throws IllegalArgumentException если переданы некорректные параметры сортировки.
+     */
+    Page<PersonDTO> searchPersons(int page, int size, String sortField, String sortDirection);
 }

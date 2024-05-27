@@ -3,7 +3,6 @@ package org.example.softlabtest.mapper;
 import org.example.softlabtest.dto.PersonDTO;
 import org.example.softlabtest.entity.Person;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 

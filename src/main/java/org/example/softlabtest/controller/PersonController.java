@@ -1,8 +1,10 @@
 package org.example.softlabtest.controller;
 
 import org.example.softlabtest.dto.PersonDTO;
+import org.example.softlabtest.entity.Person;
 import org.example.softlabtest.service.api.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -97,12 +99,32 @@ public class PersonController {
     /**
      * Ищет людей по строке поиска и возвращает их в виде DTO.
      *
-     * @param searchString Строка поиска.
+     * @param name имя для поиска.
+     * @param email email для поиска.
      * @return Ответ со списком людей, соответствующих строке поиска.
      */
     @PostMapping("/search")
-    public ResponseEntity<List<PersonDTO>> searchPersons(@RequestBody String searchString) {
-        List<PersonDTO> personDTOs = personService.searchPersons(searchString);
+    public ResponseEntity<List<PersonDTO>> searchPersons(@RequestParam String name, @RequestParam String email) {
+        List<PersonDTO> personDTOs = personService.searchPersons(name, email);
         return ResponseEntity.ok(personDTOs);
     }
+
+    /**
+     * Выполняет поиск и пагинацию сущностей {@link Person} с возможностью сортировки.
+     *
+     * @param page          номер страницы (начиная с 0).
+     * @param size          количество элементов на странице.
+     * @param sortField     поле, по которому будет осуществляться сортировка.
+     * @param sortDirection направление сортировки (ASC или DESC).
+     * @return страница с DTO объектов {@link PersonDTO}.
+     */
+    @GetMapping("/searchPage")
+    public Page<PersonDTO> searchPersons(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam String sortField,
+            @RequestParam String sortDirection) {
+        return personService.searchPersons(page, size, sortField, sortDirection);
+    }
+
 }

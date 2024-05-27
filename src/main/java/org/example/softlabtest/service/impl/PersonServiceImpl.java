@@ -7,6 +7,10 @@ import org.example.softlabtest.exception.NotFoundException;
 import org.example.softlabtest.mapper.PersonMapper;
 import org.example.softlabtest.repository.PersonRepository;
 import org.example.softlabtest.service.api.PersonService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -89,14 +93,34 @@ public class PersonServiceImpl implements PersonService {
     /**
      * Ищет людей по строке поиска (имя или email).
      *
-     * @param searchString Строка поиска.
+     * @param name имя для поиска.
+     * @param email email для поиска.
      * @return Список людей в виде DTO, соответствующих строке поиска.
      */
     @Override
-    public List<PersonDTO> searchPersons(String searchString) {
-        List<Person> persons = personRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(searchString, searchString);
+    public List<PersonDTO> searchPersons(String name, String email) {
+        List<Person> persons = personRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(name, email);
         return persons.stream()
                 .map(personMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Выполняет поиск и пагинацию сущностей {@link Person} с возможностью сортировки.
+     *
+     * @param page          номер страницы (начиная с 0).
+     * @param size          количество элементов на странице.
+     * @param sortField     поле, по которому будет осуществляться сортировка.
+     * @param sortDirection направление сортировки (ASC или DESC).
+     * @return страница с DTO объектов {@link PersonDTO}.
+     * @throws IllegalArgumentException если переданы некорректные параметры сортировки.
+     */
+    @Override
+    public Page<PersonDTO> searchPersons(int page, int size, String sortField, String sortDirection) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortField));
+        Page<Person> personsPage = personRepository.findAll(pageable);
+        return personsPage.map(personMapper::toDTO);
+    }
+
 }
